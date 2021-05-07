@@ -23,7 +23,7 @@ export default function NewMachine({ history }) {
 
     if (response.message) return setIsModalActive(true);
 
-    const createdMachineId = response;
+    const createdMachineId = response.id;
 
     redirect(createdMachineId);
   };

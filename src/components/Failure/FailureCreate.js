@@ -50,7 +50,7 @@ export default function FailureCreate({ history, location }) {
 
     if (response.message) return setIsModalActive(true);
 
-    const createdFailureId = response;
+    const createdFailureId = response.id;
 
     redirect(createdFailureId);
   };
