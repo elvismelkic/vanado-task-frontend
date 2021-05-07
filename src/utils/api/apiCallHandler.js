@@ -6,8 +6,10 @@ const handleApiCall = async (...args) => {
 
 const handleResponse = async response => {
   if (response === null) return { message: "Something went wrong" };
-  
+
   if (response.ok) {
+    if (response.status === 204) return; // Delete request response
+
     let json = await response.json();
     response = json.data;
   } else if (response.status === "404") {
