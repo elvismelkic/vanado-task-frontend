@@ -1,6 +1,6 @@
 import handleApiCall from "./apiCallHandler";
 
-const mainUrl = "http://localhost:4000/api/";
+export const mainUrl = "http://localhost:4000/api/";
 // const mainUrl = "https://localhost:44387/";
 
 export async function fetchAll(route, query) {
