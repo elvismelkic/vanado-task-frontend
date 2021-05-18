@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import FailureStatus from "./FailureStatus";
 import DeleteModal from "../DeleteModal";
 import ModalContainer from "../ModalContainer";
-import { fetchOne, deleteOne, upload } from "../../utils/api/calls";
+import { fetchOne, deleteOne, upload, mainUrl } from "../../utils/api/calls";
 
 export default function FailurePage(props) {
   const id = props.match.params.id;
@@ -20,6 +20,7 @@ export default function FailurePage(props) {
   useEffect(() => {
     async function fetchData() {
       const failure = await fetchOne("failures", id);
+
       setFailure(failure);
       setImages(failure.files.filter((file) => file.type.includes("image/")));
 
@@ -105,7 +106,7 @@ const FailureDetails = ({
       <h2 className="page-title">{failure.name}</h2>
       <p className="failure__field">
         <span className="failure__field--span">Machine:</span>
-        <Link to={`/machines/${failure.machineId}`}>{failure.machineName}</Link>
+        <Link className="machine__link" to={`/machines/${failure.machine.id}`}>{failure.machine.name}</Link>
       </p>
       <div className="failure__field failure__field--flex">
         <span className="failure__field--span">Status:</span>
@@ -155,7 +156,7 @@ const ImagesContainer = ({
   };
 
   const handleClick = (image) => {
-    setModalImage(`/images/failure_${image.failureId}/${image.name}`);
+    setModalImage(`${mainUrl}files/failure_${image.failureId}/${image.name}`);
     setIsImageModalActive(true);
   };
 
@@ -179,7 +180,7 @@ const ImagesContainer = ({
                   X
                 </button>
                 <img
-                  src={`/images/failure_${image.failureId}/${image.name}`}
+                  src={`${mainUrl}files/failure_${image.failureId}/${image.name}`}
                   alt="Failure"
                   className="failure__img"
                   onClick={() => {
@@ -208,7 +209,7 @@ const DocumentsContainer = ({ documents, setDocuments }) => {
               <li key={document.id} className="failure__document">
                 <span>{document.name}</span>
                 <Link
-                  to={`/images/failure_${document.failureId}/${document.name}`}
+                  to={{ pathname: `${mainUrl}files/failure_${document.failureId}/${document.name}` }}
                   className="failure__file-btn failure__file-btn--download"
                   target="_blank"
                   download

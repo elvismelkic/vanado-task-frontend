@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import FailureStatus from "./FailureStatus";
 
 export default function FailureListItem({
@@ -11,16 +11,20 @@ export default function FailureListItem({
   return (
     <div className="failure__item">
       <p className="item__text">{failure.name}</p>
-      {showMachine ? <p className="item__text">{failure.machineName}</p> : null}
+      {
+        showMachine
+        ? <Link className="machine__link" to={`/machines/${failure.machine.id}`}>{failure.machine.name}</Link>
+        : null
+      }
       <FailureStatus failure={failure} setFailure={setFailure} />
       <p
         className={`item__text item__text--priority item__text--${failure.priority}`}
       >
         {failure.priority}
       </p>
-      <NavLink className="item__text--details" to={`/failures/${failure.id}`}>
+      <Link className="item__text--details" to={`/failures/${failure.id}`}>
         Details
-      </NavLink>
+      </Link>
     </div>
   );
 }
