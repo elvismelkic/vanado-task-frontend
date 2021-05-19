@@ -39,7 +39,13 @@ export default function FailurePage(props) {
 
     const response = await upload(filesToUpload, id);
 
-    if (response.message) setIsFileExistsModalActive(true);
+    if (response.message) return setIsFileExistsModalActive(true);
+
+    setImages(response.filter((file) => file.type.includes("image/")));
+
+    setDocuments(
+      response.filter((file) => !file.type.includes("image/"))
+    );
   };
 
   return loading ? (
